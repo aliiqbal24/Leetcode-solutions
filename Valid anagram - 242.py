@@ -2,8 +2,10 @@
 # for anagram to be true, both string must have the same
 # amount of occurences for each charachter in both strings
 # can be done with hashmap
+# add to hashmap, as iterate
 # both must have same number of character
 # Big-O of (s+t)
+
 
 class Solution:
     def isAnagram(self, s: str, t: str) -> bool:
