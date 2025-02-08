@@ -1,0 +1,39 @@
+### Notes
+# We are trying to return the maximum depth of a tree, which can be done by a traversal
+# Both DFS and BFS would do the trick, as it seems for intuitive lets do BFS
+# We will check all paths, advancing one step at a time
+# save the furthest depth and update it whenever the is a new champ
+# return this winner when the whole tree has been traversed
+# O(N) time complexity we traverese each element once 
+
+
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+class Solution:
+    def maxDepth(self, root: Optional[TreeNode]) -> int:
+
+        if not root:
+            return 0
+        
+        q = deque([root])
+
+        maxdepth = 0
+
+        while q:
+
+            for i in range(len(q)):
+                node = q.popleft()
+                if node.left:
+                    q.append(node.left)
+                if node.right:
+                    q.append(node.right)
+
+            maxdepth += 1
+
+        return maxdepth
