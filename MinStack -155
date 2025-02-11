@@ -1,0 +1,41 @@
+### Notes
+# We are designing a stack class from scratch
+# This will contain all the tradional functions of a stack with one extra function
+# We must make a minstack function that retrieves the minumum element is O(1) time
+# to allow for this we can keep track of the minumum for each node
+# this will be implemented by creating another stack 
+# this extra stack will keep the minimums for each node, so that when elements are popped, it adjusts accordingly
+# Pop and top functions are self explanitory
+# Main algorithm is in push, where value is appended to the standard stack 
+# then the current minumum is appended to the minstack, so that it is orderde
+# all opperations as in O(1) time complexity
+
+
+class MinStack:
+
+    def __init__(self):
+
+        self.stack = []
+        self.minStack = []
+
+    def push(self, val: int) -> None:
+
+        self.stack.append(val)
+        val = min(val, self.minStack[-1] if self.minStack else val)
+        self.minStack.append(val)
+
+
+    def pop(self) -> None:
+
+        self.stack.pop()
+        self.minStack.pop()
+
+    def top(self) -> int:
+
+        return self.stack[-1]
+        
+
+    def getMin(self) -> int:
+
+        return self.minStack[-1] 
+        
