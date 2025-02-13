@@ -1,0 +1,29 @@
+#### notes
+# to convert from a roman numeral to an integer, we must first map each numeral to the corresponding int value with a hash map
+# also we will initiallize the sum to be 0
+# then we iterate through our input string, looking at both the current char and next
+# first check if we are still in the string, if so continue
+# since there are also subtraction in the sum, we check if current char is smaller tahn next, these are subtracted from the sum
+# Otherwise, values are added for each numeral
+#return the final current sum
+
+
+class Solution(object):
+    def romanToInt(self, s):
+        
+        roman = {"I":1, "V": 5, "X":10, "L": 50, "C" :100, "D":500, "M":1000}
+        
+        currsum = 0 
+
+        for i in range(len(s)):
+
+            if i+1< len(s) and roman[s[i]] <roman[s[i+1]]:
+                currsum -= roman[s[i]]
+            else: 
+                currsum += roman[s[i]]
+
+        return currsum
+
+            
+
+        
