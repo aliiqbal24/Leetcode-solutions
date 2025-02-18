@@ -1,0 +1,31 @@
+### Notes
+# check if board is valid, does not have to be full or solvable
+# This means we are checking for duplicates in each row, column, 3X3 subsquare
+# a set of each of these would remove any duplicates
+# if we check for duplicates by creating hashsets, no dupes then the board is valid
+# if not, they are invalid
+# for the rows and columns the comparison is straight forward
+# for the sub 3X3s we will use floor division to get the 0,2 indexing
+# we can check each row, then column, then each subsquare seperately, since the board is fixed these are easily defined
+
+
+class Solution:
+    def isValidSudoku(self, board: List[List[str]]) -> bool:
+
+        cols = collections.defaultdict(set)
+        rows = collections.defaultdict(set)
+        squares = collections.defaultdict(set)
+
+        for i in range(9):
+            for j in range(9):
+                if board[i][j]== ".":
+                    continue
+                if (board[i][j] in rows[i] or board[i][j] in cols[j] 
+                or board[i][j] in squares[(i//3),(j//3)]):
+                    return False
+                cols[i].add(board[i][j])
+                rows[j].add(board[i][j])
+                squares[(i//3),(j//3)].add(board[i][j])
+            return True
+
+        
