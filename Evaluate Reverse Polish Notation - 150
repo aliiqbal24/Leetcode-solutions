@@ -1,0 +1,36 @@
+### notes
+# 
+# Here we calculating the result of an equation from reverse polish notation
+# its seems that the first numbers are stored until an operation arises
+# then we perform that operation on the preceding 2 numbers
+# we are guarenteed a valid input, so we can ignore edge cases
+# division in python "/" is decimal, so we must convert to integer
+# we can do this with a stack data type
+# We will append numbers to a stack, then pop and perfom the operation then store again
+# at the end we return the stack with our total
+# the time complexity of my solution is big O(N) as we are iterating through the array one 1 trip
+
+
+class Solution:
+    def evalRPN(self, tokens: List[str]) -> int:
+        
+        total = []
+        
+        for i in tokens:
+
+            if i == "-":
+                a,b = total.pop(), total.pop()
+                total.append(b-a)
+            elif i == "+":
+                total.append(total.pop() + total.pop())
+            elif i == "*":
+                total.append(total.pop() * total.pop())
+            elif i == "/":
+                a,b = total.pop(), total.pop()
+                total.append(int(b/a))
+            else: 
+                total.append(int(i))
+        
+        return total[0]
+            
+
