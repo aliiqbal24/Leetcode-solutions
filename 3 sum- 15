@@ -9,6 +9,7 @@
 # now we can use two pointers at the left and right
 # check if the target is matched, if so store and continue
 # if not adjust the left or right, according to is the target is <,>
+
 # return all results
 
 
