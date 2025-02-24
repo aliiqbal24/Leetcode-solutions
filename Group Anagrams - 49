@@ -1,0 +1,31 @@
+### NOTES
+# an anagram can be thought of as strings that contain the same amount of each letter as eachother
+# we can map every string to their composition of letters and their amounts
+# this will be done with a hashmap, where the key is the strings and the value is the composition
+# using a for loop, we will map every element of strs
+# to organize the letters in order (in map), we will use the ascii count 
+# then we will check whick strings have the same value
+# return these strings as our result
+# the Big O will be O(N*M) where n is the numbers of strings and m is the average of the strings
+# (shown in double for loop)
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+
+        res = defaultdict(list)
+
+        for i in strs:
+            count = [0]*26
+
+            for c in i:
+                count[ord (c) - ord ("a")] += 1
+
+            res[tuple(count)].append(i)
+        
+        return res.values()
+
+
+
+
+
+        
+        
