@@ -1,0 +1,30 @@
+### NOTES
+# A brute force solution would be checking every iteration for duplicates and returning the longest that passes the check
+# This is wasteful,as we can solve this problem most efficiently by using a pointer solution
+# By using a sliding window, we can start at the first to elements
+# and move the right one at a time, if there is a duplicate we must move the left
+# if not we track the length, move the right and repeat
+# by using a set we can remove any duplicates, adding an removing accordingly
+# once the right pointer is at the end of the array, we have checked or string and have the solution
+# this is O(N) time complexity as there was one iteration of the whole string
+
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+
+
+        charset = set()
+        l = 0
+        maxlength = 0
+
+        for r in range(len(s)):
+
+            while s[r] in charset:
+                charset.remove(s[l])
+                l += 1
+            
+            charset.add(s[r])
+            maxlength = max(maxlength, r-l+1)
+
+        return maxlength
+
+        
