@@ -1,0 +1,40 @@
+### Notes
+# like the saying goes, we want to buy low sell high
+# A brute force method would be tracking the profit for each price, if it was sold at any of the next days
+# this would have an O(n^2) time complexity, we can do better
+# By using a 2pointer "sliding window approach" we can solve by itterating through the array just once
+# Start with pointers at the first and second element, can calculate the profit
+# move the right pointer one at a time until it reaches the end
+# if the profit is greatest here, this our current max
+# when the entire array has been searched, we will return max profit
+
+
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+
+        buy,sell = 0,1
+
+        curmaxprof = 0
+
+        while sell < (len(prices)):
+            if prices[buy] < prices[sell]:
+                profit = prices[sell]- prices[buy]
+                curmaxprof = max(curmaxprof,profit)
+            else:
+
+                buy = sell 
+
+            sell +=1 
+        return curmaxprof
+            
+
+
+                
+
+
+
+
+
+        
+    
+        
