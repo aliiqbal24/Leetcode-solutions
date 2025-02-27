@@ -1,0 +1,36 @@
+### NOTES
+# All pairs start with an openning bracket
+# In any set of parenthesis, there must first be an equal or greater amount of open brackets
+# two cases from an opening bracket, close it directly or another opening, which has the same options
+# the final parenthese will be closing, creating n count of open and close
+# We can do this recursively with a stack
+# base case is when there are n closed and open brackets
+# generate open brackets, for each one, close or add another opening and continue this until n 
+# function will recursively generate all combinations which are added to our result
+# return result list
+
+class Solution:
+    def generateParenthesis(self, n: int) -> List[str]:
+
+        stack = []
+        res = []
+
+        def generate(openC, closedC):
+
+            if openC == closedC == n:
+                res.append("".join(stack))
+                return
+            
+            if openC < n:
+                stack.append("(")
+                generate(openC+1, closedC)
+                stack.pop()
+            
+            if closedC < openC:
+                stack.append(")")
+                generate(openC, closedC+1)
+                stack.pop()
+            
+        generate(0,0)
+        return res
+                
