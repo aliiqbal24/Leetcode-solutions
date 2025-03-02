@@ -1,0 +1,27 @@
+### Notes
+# A Simple and intuitive solution to this problem is to find the product of all elements and divide the current
+# this comes with the possiblity of divide by zero errors, there is another better solution
+# The product of the numbers before and after each element is the same as the prefix produt * the post fix product
+# for each element we can replace it with this product
+# this would be O(N) space as we are not leaving any extra arrays
+# it would also be O(N) time complexity as there isa fixed operation for each element
+
+class Solution:
+    def productExceptSelf(self, nums: List[int]) -> List[int]:
+
+        res = [1]*len(nums)
+        prefix = 1
+ 
+        for i in range(len(nums)):
+
+            res[i] = prefix
+            prefix *= nums[i]
+
+        postfix = 1 
+        for i in range (len(nums)-1,-1,-1):
+
+            res[i] *= postfix
+            postfix *= nums[i]
+        return res
+
+        
