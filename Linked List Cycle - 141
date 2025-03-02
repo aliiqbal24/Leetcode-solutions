@@ -1,0 +1,31 @@
+### Notes
+# We are checking for a cyle in a linked list
+# By using a "fast" and "slow" pointer, we can have them both traverse the list 
+# the fast pointer will move 2 nodes for the slow pointers 1 node
+# if the val of the fast is equivalent then we have a cycle
+# this can be thought of as the fast "lapping" the slow pointer in the list
+# if the fast reaches  null then the algorithm returns false
+# this is often called the tortoise and hare algorithm and is O(N)
+
+
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+class Solution:
+    def hasCycle(self, head: Optional[ListNode]) -> bool:
+
+        slow, fast = head, head
+
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+
+            if slow == fast:
+                return True
+
+        return False
+
+        
