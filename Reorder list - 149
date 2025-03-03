@@ -1,0 +1,55 @@
+### NOTES
+# For this problem we want to rearrange the list like so: [1,n-1,2,n-2....]
+# a brute technique would be to convert the list into an array and rearrange with a for loop
+# This takes extra memory, instead we can solve this by treating it like a merging problem
+# first we split the list in half, creating a temp list from the second half
+# this is done with a fast/ slow pointer system, breaking at the slow, when fast is null
+# we will then reverse this temp list
+# then we add gaps to the first half, after each node, we append the reverse temp list
+# when done this is our result
+
+
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+class Solution:
+    def reorderList(self, head: Optional[ListNode]) -> None:
+
+        slow, fast = head, head.next
+
+        while fast and fast.next:
+
+            slow = slow.next
+            previous = fast = fast.next.next
+
+        
+        second = slow.next
+        prev = slow.next = None
+        while second:
+            tmp = second.next
+            second.next = prev
+            prev = second
+            second = tmp
+
+        
+        first, second = head, prev
+        while second:
+            tmp1, tmp2 = first.next, second.next
+            first.next = second
+            second.next = tmp1
+            first = tmp1
+            second = tmp2
+
+
+        
+
+
+
+
+
+
+        
+        
