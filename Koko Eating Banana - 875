@@ -1,0 +1,46 @@
+### NOTES
+# Output rate will be at most the max amount in piles as kok can only eat one pile in an hour
+# if you go over it is not the minimum, and if you go there may be a lower answer
+# Our goal is to locate this value, we can do this by implementing a binary search
+# we are looking for a rate k that will be the banas per hour h, bananas/ k leq h
+# we can check if a rate works by The sum of all these will must be less than or equal to h
+# From our binary search we can efficiently locate the best rate
+# We can store the lowest rate as we iterate, updating if a lower rate works
+# at the end we will return the lowest rate
+# the time complexity of this wil be O(p log(q)) where p is the number of elements in piles
+# and q is the range 1 - max(P)
+
+from math import ceil
+
+
+class Solution:
+    def minEatingSpeed(self, piles: List[int], h: int) -> int:
+
+        top = res = max(piles)
+
+        bottom = 1
+
+
+        #BS
+
+        while bottom<= top:
+
+            mid = (top +bottom)//2
+            total = 0
+            for i in piles:
+                total += ceil(i/mid)
+                    
+            if total <= h:
+                res = min(res,mid)
+                top = mid-1
+
+            else: 
+                bottom = mid + 1
+        
+        return res
+
+
+
+                
+
+        
