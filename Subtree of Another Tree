@@ -1,0 +1,31 @@
+### NOTES
+# we are looking for a subtree of our root tree that matches the input
+# a brute force for this solution by checking every node, starting from the node down
+# This is O(N*M) for the 2 trees worst case, unfortunately this is the most optimal solution
+# to implement this first lets make a helper function to check if a tree is the same
+# this will occur recursively to check every node availabe
+# And we will do this function recursively for the left and right subtrees of root
+# hence the O(n*m) time complexity
+
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+class Solution:
+    def isSubtree(self, root, subRoot):
+        if not subRoot:
+            return True
+        if not root:
+            return False
+        if self.isSame(root, subRoot):
+            return True
+        return self.isSubtree(root.left, subRoot) or self.isSubtree(root.right, subRoot)
+
+    def isSame(self, root, subRoot):
+        if not root and not subRoot:
+            return True
+        if not root or not subRoot or root.val != subRoot.val:
+            return False
+        return self.isSame(root.left, subRoot.left) and self.isSame(root.right, subRoot.right)
