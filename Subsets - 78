@@ -1,0 +1,29 @@
+### Notes
+# we must return the all the subsets of a set input
+# a unique subset is a set with in the set that is the only one with that assortment
+# for each element of nums, we have two paths, to include it or not
+# this logic is applied to the first num, then on top of the result subset with the next num and so on
+# we can implement a DFS algortith that iterate the inputs, for one case including the number to our current subset
+# or conversely a case where we do not include the num to our subsets
+# because there are 2 cases therefore operation for each input, the Big O is O(2^N)
+# this is innefficent but for a problem like this it is litterally the best we can do
+
+class Solution:
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+
+        result = []
+
+        subset = []
+
+        def dfs(i):
+            if i >= len(nums):
+                result.append(subset.copy())
+                return
+            subset.append(nums[i])
+            dfs(i+1)
+
+            subset.pop()
+            dfs(i+1)
+        
+        dfs(0)
+        return result
