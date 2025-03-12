@@ -1,0 +1,39 @@
+### NOTES
+# Brute force: we could add nums together, in every possible combination, and store the combinations that add to 0
+# We can do better with a backtracking approach, as each time we have 2 decisions
+# By starting with the first elemement, we can explore each case where we either do or do not add each element including itself
+# this process will continue, until a total == target, in which case we store this to a result list
+# if our total goes over the target, we can terminate this path as it is not valid
+# to optimize and avoid duplicates, we fix the amount of each element in each path
+# once we have check each path, we can return our resulting array, which has all the possible answers
+# the Time Complexity of this solution is:  O(2^T) where t is the target
+
+class Solution:
+    def combinationSum(self, nums: List[int], target: int) -> List[List[int]]:
+        
+        res = []
+
+        def dfs(i,cur,total):
+            if total == target:
+                res.append(cur.copy())
+                return
+            if i >= len(nums) or total > target:
+                return
+
+            cur.append(nums[i])   # path where we include
+            dfs(i, cur, total + nums[i])
+
+            cur.pop()
+            dfs( i+1, cur, total)  # path where we exclude
+        dfs(0,[],0)
+        return res
+
+
+                
+
+
+
+
+            
+            
+            
