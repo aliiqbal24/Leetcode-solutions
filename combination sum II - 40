@@ -1,0 +1,44 @@
+### NOTES
+# We must return all combinations of the condidates array that equal the target
+# as we are being asked to return the list, we can tell this is a backtracking problem
+# a condition for this solution is any element may be used at most once
+# the input array is not sorted so lets start with that, this operation is not the limiting factor so we can do this freely
+# also we will initaliize our result array, which contain our valid combinations
+# for every element of the candidates array, we have the option to include or not
+# we will make a case for both of those, and repeat this as the decision tree grows
+# in the case of duplicates, to gaurentee uniqueness, we will only explore 1 path for each unique element
+# from this we can tell that the worst case big O is O(n * 2^n)
+# when a path of the tree has reached the target, we will append it to the list and terminate
+
+
+class Solution:
+    def combinationSum2(self, candidates: List[int], target: int) -> List[List[int]]:
+        
+        candidates.sort()
+        res = []
+
+        def backtrack(cur,j,target):
+            if target == 0:
+                res.append(cur.copy())
+            
+            if target <= 0:
+                return
+            
+            prev = -1
+
+            for i in range(j,len(candidates)):
+                if candidates[i] == prev:
+                    continue
+                cur.append(candidates[i])
+                backtrack(cur,i+1,target-candidates[i])
+                cur.pop()
+
+                prev = candidates[i]
+        
+        backtrack([],0, target)
+        return res
+
+            
+
+            
+
