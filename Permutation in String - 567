@@ -1,0 +1,42 @@
+### NOTES
+# a brute force solution would be to check every charachter in string2, and see if it contains the same amount of each letter in string1
+# we can do better by implementing a sliding window technique
+# first we will check the edge case of the s1 being larger than s2
+# Now we can capture the number of each letter in our s1 with a hashmap
+# then we go through s2, updating an empty map for s2
+# by iterating through s2, we can check its counts for each letter, in a snapshot of len(s2)
+# if ever our maps are the same then we can return true
+# if our sliding window reaches the end without returning true, then we can return the default false
+# the big O notation of our solution is (O(n)
+# the space complexity is O(1)
+
+class Solution:
+    def checkInclusion(self, s1: str, s2: str) -> bool:
+        
+        n1 = len(s1)
+        n2 = len(s2)
+
+        s1_counts = [0] *26
+        s2_counts = [0] *26
+
+        if n1>n2:
+            return False
+
+        for i in range(n1):
+            s1_counts[ord(s1[i])-ord('a')] += 1
+            s2_counts[ord(s2[i])-97] += 1
+
+        if s1_counts== s2_counts:
+            return True
+        
+        for i in range(n1,n2):
+
+            s2_counts[ord(s2[i])-97] += 1
+            s2_counts[ord(s2[i-n1])-ord('a')] -= 1
+            if s1_counts== s2_counts:
+                return True
+        
+        return False
+
+        
+        
