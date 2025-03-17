@@ -1,0 +1,24 @@
+### notes
+# this problem is a fibonacci sequence in disguise
+# here we can use a bottom up, dynamic programming approach
+# the amount of paths for each n is equal to the amount of paths of n-1 + n-2
+# therefore, we can solve just two subproblems and trace the next steps back to these
+# for the number of steps from 0 to n-1, we remember what the # of paths for the previous stair was
+# we add the n-2 step to that value, and update the paths for this value
+# lastly we return the current number of paths
+
+
+class Solution:
+    def climbStairs(self, n: int) -> int:
+
+        one, two = 1,1
+
+        for i in range(n-1):
+            
+            temp = one
+            one += two
+            two = temp
+               
+        return one
+
+        
