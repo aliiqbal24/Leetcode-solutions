@@ -1,0 +1,33 @@
+### Notes
+# A brute force solution for this problem would be a backtracking approach, where we have a tree
+# each node of the tree has a case where we include an element, and one we dont
+# then we could return the shortest valid path or, -1 if none
+# this is O(2^n), but we notice that this problem is can be broken down to the same repeated subproblems
+# therefore we will use a bottom up backtracking approach to solve this
+# First we must compute and store the min number of coins for our initial subproblems of 0 to highest coin amount (when possible)
+# for our amount, we try a case for each coin, and after subtracking we recrussively continue
+# each time we see a subproblem again, we know its steps, when we reach the coin value with in our initial subproblem amount
+# we can immediately add this to our dp count 
+# finally we can return the minimum dp count 
+# if we always go under 0, when we subrtact our final coin, then we can return -1 as no negative valid path
+# the time complexity of our solution is
+
+class Solution:
+    def coinChange(self, coins: List[int], amount: int) -> int:
+        
+        dp = [amount+1]*(amount + 1)
+
+        dp[0] = 0
+
+        for a in range(1,amount+1):
+            for c in coins:
+                if a-c >= 0:
+                    dp[a] = min(dp[a], 1+dp[a-c])
+            
+        if dp[amount] != amount+1:
+            return dp[amount] 
+
+        else: return -1
+
+                    
+
