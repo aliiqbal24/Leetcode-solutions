@@ -1,0 +1,24 @@
+### NOTES
+# we can looking for the number of days it takes to get a higher temperature, for every day
+# A brute force solution is: for everyday, count how long it takes, and append this to a new array, and repeat
+# this solution has an O(n^2) time complexity, from the nested for loop
+# by analysis, I can tell we can optimize by using a stack
+# I will revisit and try that another day
+
+class Solution:
+    def dailyTemperatures(self, temperatures: List[int]) -> List[int]:
+        
+        result =[0] *len(temperatures)
+
+        count = 0
+
+        for i in range(len(temperatures)):
+            for j in range(i+1,len(temperatures)):
+                if temperatures[j] > temperatures[i]:
+                    result[i] = j-i
+                    break
+        
+        return result
+
+            
+
