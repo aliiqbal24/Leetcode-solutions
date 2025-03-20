@@ -1,0 +1,27 @@
+### Notes
+# we are looking for the one element of the array that does not repeat
+# we can keep track of how many of each element there is with a hashmap
+# This way, after one check of the array, we will know which element only appears once
+# we can return this element, giving us an O(N) time complexity solution
+# the space complexity is O(N)
+
+class Solution:
+    def singleNumber(self, nums: List[int]) -> int:
+
+        Hmap = {}
+
+        for i in nums:
+            if i in Hmap:
+                Hmap[i] += 1
+            else:
+                Hmap[i] = 1
+        
+        for key, value in Hmap.items():
+            if value == 1:
+                return key
+
+### solution 2 
+# there is a solution, using the xor operation, which is O(1) space
+# i will try this another time
+
+        
