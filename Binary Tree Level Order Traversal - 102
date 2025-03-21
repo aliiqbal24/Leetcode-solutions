@@ -1,0 +1,45 @@
+### NOTES
+# We are looking to return a level order traversal of a binary tree
+# this means, from left to right, we return the nodes of same height, each in a list of that level
+# immediately, BFS comes to mind, we can perform this with a queue, adding to it while the level is not empty
+# once the whole level has been traversed we can append the queue to our solution, and move on to the next level
+# This solution will be O(n) time and O(n) space, n is the number of nodes
+
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+class Solution:
+    def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
+        
+        res = []
+
+        q = collections.deque()
+        q.append(root)
+
+        while q:
+
+            qlen = len(q)
+            level = []
+            
+            for i in range(qlen):
+                node = q.popleft()
+                if node:
+                    level.append(node.val)
+                    q.append(node.left)
+                    q.append(node.right)
+            if level:
+                res.append(level)
+        
+        return res
+                
+
+
+
+        
+
+        
