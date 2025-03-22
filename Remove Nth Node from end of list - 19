@@ -1,0 +1,28 @@
+### Notes
+# A brute for solution to this problem is to make an array of the list and then perform the operation
+# before returning, we can make a list of the array and return that, but this takes O(n) space
+# to optimize we can go for a two pointer approach
+# We initalize a left pointer at the head, and right at (left + n)
+# pass along list until R is at null, here L is n from end
+# remove left pointer node, and relink the list, this is our result that we return
+
+# to optimize this remove, we adjust our solution with a dummy node beofre the head and have our left pointer start here
+# this way we can just link the left to l.next.next, removing the nth node optimally
+
+class Solution:
+    def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
+        
+        dummy = ListNode(0,head)
+        left = dummy
+        right = head
+        while n > 0 and right:
+            right = right.next
+            n-= 1
+        
+        while right:
+            left = left.next
+            right = right.next
+        
+        left.next = left.next.next
+
+        return dummy.next
