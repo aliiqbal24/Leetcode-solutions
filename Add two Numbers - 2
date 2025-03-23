@@ -1,0 +1,31 @@
+### NOTES 
+#
+# we are given 2 linked list in reverse order, and we want to add them and return the sum as a list
+# since they are reveresed, we know both start in the ones place
+# every time there is a sum of digits greater than 10, the ones places goes to the node and there is a carry to the next
+# we must keep track of this carry, if l1 and l2 are null we must still add it
+# The Dummy list node is used to construct our result list, which is what we return for our solution
+ 
+
+class Solution:
+    def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+        
+        dummy = ListNode()
+        cur = dummy
+
+        carry = 0
+        while l1 or l2 or carry:
+            v1 = l1.val if l1 else 0
+            v2 = l2.val if l2 else 0
+
+            val = v1 + v2 + carry
+            carry = val // 10 
+            val = val % 10
+            cur.next = ListNode(val)
+            cur = cur.next
+            l1 = l1.next if l1 else None
+            l2 = l2.next if l2 else None
+        
+        return dummy.next
+
+  
