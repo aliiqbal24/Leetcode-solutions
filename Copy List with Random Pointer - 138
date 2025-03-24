@@ -1,0 +1,30 @@
+### NOTES
+# 
+# For this problem, We are given a linked list where each node has 2 pointer, 1 to the next and 1 to a random
+# to deepcopy this list we must recreate it with the same pointers
+# we will take an approach where we do 2 passes, the first will be to make a hashmap of the nodes of the copy to the original
+# the 2nd pass will be where we copy the pointers of the original list
+# the non random pointers will be from our hash map and the randoms will be from the original list
+# our solution is O(n) time complexity and O(n) space from the hashmap
+
+class Solution:
+    def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
+        
+        OldToCopyMap = {None: None}
+
+        cur = head
+        while cur:
+
+            copy = Node(cur.val)
+            OldToCopyMap[cur] = copy
+            cur = cur.next
+        
+        cur = head 
+
+        while cur:
+            copy = OldToCopyMap[cur]
+            copy.next = OldToCopyMap[cur.next]
+            copy.random = OldToCopyMap[cur.random]
+            cur = cur.next
+
+        return OldToCopyMap[head]
