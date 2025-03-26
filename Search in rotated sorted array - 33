@@ -1,0 +1,43 @@
+### NOTES
+# First find the pivot index with binary search
+# Binary search in the portion from pivot to either left or right ends
+# If target is greater than or equal to nums[pivot] and less than or equal to nums[r], search the right half
+# Else, search in the left half
+# The big O is O(log n) because we perform two binary searches, each taking O(log n)
+# The space complexity is O(1) because we only use a few variables and no extra data structures
+
+class Solution:
+    def search(self, nums: List[int], target: int) -> int:
+        if not nums:
+            return -1
+
+        l, r = 0, len(nums) - 1
+
+        # Find rotation index (pivot)
+        while l < r:
+            mid = (l + r) // 2
+            if nums[mid] > nums[r]:  # Pivot is on the right
+                l = mid + 1
+            else:  # Pivot is on the left or at mid
+                r = mid
+        
+        pivot = l
+
+        # Determine which half to binary search
+        l, r = 0, len(nums) - 1
+        if target >= nums[pivot] and target <= nums[r]:
+            l = pivot
+        else:
+            r = pivot - 1
+
+        # Binary search in the correct half
+        while l <= r:
+            mid = (l + r) // 2
+            if nums[mid] == target:
+                return mid
+            elif nums[mid] < target:
+                l = mid + 1
+            else:
+                r = mid - 1
+
+        return -1
