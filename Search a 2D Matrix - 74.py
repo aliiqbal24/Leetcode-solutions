@@ -1,4 +1,5 @@
 ### NOTES
+#
 # Perform binary search on first column (left)
 # find the column where either target is equal to or bigger than, but smaller than the next
 # this is the column of your possible target
