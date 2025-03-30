@@ -1,0 +1,18 @@
+### NOTES
+#
+# we are given a binary integer and we want to return how many ones are in it
+# this can be done with the mod operator
+# for every place, we can mod the number by 2, if the digit is a one, this is the mod
+# we keep adding until the number is 0
+# after every mod, we shift the number once
+
+class Solution:
+    def hammingWeight(self, n: int) -> int:
+        
+        res = 0
+
+        while n:
+            res += n%2
+            n = n>>1
+
+        return res
