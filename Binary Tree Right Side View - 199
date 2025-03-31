@@ -1,0 +1,32 @@
+### NOTES
+#
+# In this problem, we are given a tree and want to return only the nodes on the right side
+# First we initialize a result array which we willl append the nodes to
+# As we are only return the right side view, we want only the rightmost of each layer
+# We can traverse Layer by layer, appending only the rightmost
+# This is done by a bfs,where we only append the last of the level
+# Finally return our result that contains the right side view
+
+class Solution:
+    def rightSideView(self, root: Optional[TreeNode]) -> List[int]:
+        
+        res = []
+        q = collections.deque()
+        q.append(root)
+
+        while q:
+
+            rightside = None
+
+            n = len(q)
+
+            for i in range (n):
+                node = q.popleft()
+                if node:
+                    rightside = node
+                    q.append(node.left)
+                    q.append(node.right)
+            
+            if rightside:
+                res.append(rightside.val)
+        return res
