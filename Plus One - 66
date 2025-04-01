@@ -1,0 +1,33 @@
+### Notes
+#
+# This problem is often just adding one to the last integer element of the array
+# the catch is when you have a 9 in the last spot, then we must use a carry
+# this carry will be the form of a while loop
+# If the whole array is 9s then we must be prepared to append a new element to the front
+# it is more intuitive to do this by reversing the array, as we can do the operations in order
+# In our while loop we will check for a carrry, if so move on tho the next digit and so on
+# if this continues to the final digits, we must append 1
+# Our algorithm will be O(N) as we will potentially iterate through the entire array
+# Space complexity of O(1)
+
+class Solution:
+    def plusOne(self, digits: List[int]) -> List[int]:
+
+        digits = digits[::-1]
+        one, i = 1,0
+
+        while one:
+            if i < len(digits):
+                if digits[i] == 9:
+                    digits[i] = 0
+                else:
+                    digits[i] += 1
+                    one = 0
+            else:
+                digits.append(1)
+                one = 0
+            i+= 1
+        return digits[::-1]
+
+        
+        
