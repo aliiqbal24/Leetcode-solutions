@@ -1,0 +1,25 @@
+### NOTES
+#
+# here we have a climbing stairs dynamic programming problem, but each floor has a cost
+# lets break this down, we are trying to get the minumum cost to get to the end
+# A good way to think of this is by realizing at each step has a min cost to get to it
+# we are just building up from the two initial steps, calculating the min cost of each step, until we are out of the array
+# the mincost of each step is the min of the 2 steps below plus its cost, and so on
+# the time and space complexity are both O(N), pretty efficient compared to the brute force 2^n
+
+class Solution:
+    def minCostClimbingStairs(self, cost: List[int]) -> int:
+        
+        n = len(cost)
+        memo = {0:0, 1:0}
+
+        def min_cost(i):
+
+            if i in memo:
+                return memo[i]
+            else:
+                memo[i] = min(min_cost(i-1)+cost[i-1],min_cost(i-2)+cost[i-2])
+                return memo[i]
+
+        return min_cost(n)
+
