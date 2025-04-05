@@ -1,0 +1,22 @@
+### NOTES
+# 
+# We are asked to return the number of car fleets that reach the target
+# the car of the highest position is fastest any car can go, if they are to catch up
+# so we should sort the cars in order of highest to lowest position
+# then we can add the highest car to the stack, with next we consider the car behind
+# if the car behind does not catch up, we can add to our count and pop the stack
+# if it does, we consider the next car, at the end if our stack is non empty we add one to our count for that fleet
+# our final count is the amount of fleets which we return
+
+class Solution:
+    def carFleet(self, target: int, position: List[int], speed: List[int]) -> int:
+        
+        pair = [[p,s] for p,s in zip(position, speed)]
+
+        stack = []
+        for p,s in sorted(pair)[::-1]:
+            stack.append((target - p)/ s)
+            if len(stack)>=2 and stack[-1]<= stack[-2]:
+                stack.pop()
+        
+        return len(stack)
