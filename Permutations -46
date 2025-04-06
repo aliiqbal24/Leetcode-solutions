@@ -1,0 +1,25 @@
+### Notes
+#
+# as we are being asked to return the permutations of array nums, we know this is a backtracking problem
+# we can work backwards, adding a number, then the next can be in front or back
+# the third will be in all three positions to get all permutations and so on
+# we do this for every element and add the full list to the result array
+# this probelm will be done recursively, until nums is empty
+# the time complexity will be O(n! * n^2) and space is (n! *n), which is a lot but normal for backtracking
+
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        
+        if len(nums) == 0:
+            return [[]]
+
+        perms = self.permute(nums[1:])
+        res = []
+
+        for p in perms:
+            for i in range (len(p)+1):
+                p_copy = p.copy()
+                p_copy.insert(i, nums[0])
+                res.append(p_copy)
+        
+        return res
