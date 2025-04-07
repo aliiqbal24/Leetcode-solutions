@@ -1,0 +1,19 @@
+### NOTES
+#
+# A greedy solution to this problem is to look at the array backwards
+# when we think of the last index as the goal, we can go back to the previous element
+# we look for an element that can jump to the last index, when we find one, this becomes our new goal, and we look for an element that can jump to it
+# continue this process, until we make it to the beginning, if we hit a dead end and dont reach, return False
+# this solution is O(N) time complexity and no extra space is used
+
+class Solution:
+    def canJump(self, nums: List[int]) -> bool:
+
+        goal = len(nums) -1
+
+        for i in range(len(nums)-1, -1, -1):
+            if i + nums[i] >= goal:
+                goal = i
+
+        return goal == 0 
+        
