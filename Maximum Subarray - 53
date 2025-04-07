@@ -1,0 +1,24 @@
+### NOTES
+#
+# In this problem we want to find the largest subarray of the give integer array
+# If we were to check each subarray that would be O(n^3) which is extremely innefficient
+# however since there is a mix of positive and negative ints, we can solve in just one iteration
+# first initial the current sum as 0, an then add an element from the left
+# if this is negative, we try again on the next element, if it is positive we add it to the max
+# we keep doing this only updating the max if it is grater than the current max
+# once done the result is found in O(n) time and no extra space
+
+class Solution:
+    def maxSubArray(self, nums: List[int]) -> int:
+
+        maxsub = nums[0]
+        CurSum = 0
+
+        for i in nums:
+            if CurSum < 0:
+                CurSum = 0
+            CurSum += i
+            maxsub = max(maxsub, CurSum)
+        
+        return maxsub
+        
