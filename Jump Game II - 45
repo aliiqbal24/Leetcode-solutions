@@ -1,0 +1,33 @@
+### NOTES
+#
+# Here we want to return the minimium number of jumps required to reach the last index
+# we can do this by iterating through the array, keeping track of the farthest we can reach currently and how many jumps it would take
+# It can be thought of as a One dimenshional BFS, as we are trying the closest jump, and working to the biggest
+# once our farthest is greater than or equal to the last index, we can return the number of jumps needed
+# this solution is O(n) time coplexity as we get our solution in one iteration
+# and we are able to use O(1) space, for the variables farthest and jumps
+
+class Solution:
+    def jump(self, nums: List[int]) -> int:
+
+        res = 0
+        l = r = 0
+
+        while r < len(nums)-1:
+            farthest = 0
+            for i in range(l,r+1):
+                farthest = max(farthest, i+nums[i])
+            l = r+1
+            r = farthest
+            res += 1
+        return res
+
+
+
+
+
+
+        
+        
+            
+        
