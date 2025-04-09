@@ -1,0 +1,30 @@
+### NOTES
+# 
+# we want to find the loop in the arrays, where there is enough gas to make the whole trip
+# there is a guarantee that at most one solution works, and there is a possibilty that none work
+# To solve optimally, a greedy approach is best, we fist check if there is atleast enough gas for the wholw trip
+# if this is the case, we can start looking for the index to start, where the loop works
+# we keep track of the total and resulting index, if our total is ever under 0, reset and increment index
+# return the index where the total never reached 0, this is our answer
+# the time complexity is O(N) and the space is constant
+
+class Solution:
+    def canCompleteCircuit(self, gas: List[int], cost: List[int]) -> int:
+        
+        if sum(gas) < sum(cost):
+            return -1
+        total = 0
+        res = 0
+        
+        for i in range(len(cost)):
+
+            total += (gas[i]- cost[i])
+
+            if total < 0:
+                total = 0
+                res = i+1
+        return res
+            
+
+
+
