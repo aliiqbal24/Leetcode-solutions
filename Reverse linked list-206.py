@@ -1,4 +1,4 @@
-## NOTES
+### NOTES
 # We can brute force this by converting to an array then reversing, then converting back
 # This would take O(n) space, we can do better by doing inplace
 # By flipping the pointers, we can flip the list in place
