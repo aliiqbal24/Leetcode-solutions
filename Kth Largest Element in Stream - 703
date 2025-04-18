@@ -1,0 +1,27 @@
+### NOTES
+# 
+# to implement our add method and return efficiently we use a heap data stru
+# While the heap is a larger than a size of k, we pop the minimum value
+# with a size K heap, we can get the minimum value of k in O(1) time
+# the constructor could be worst case O (n log(n))
+# There are times we add values, we can add to the heap and pop the smallest one
+# the add method is worst case O(log(n))
+
+class KthLargest:
+
+    def __init__(self, k: int, nums: List[int]):
+
+        self.minheap, self.k = nums, k
+        heapq.heapify(self.minheap)
+
+        while len(self.minheap) > k:
+            heapq.heappop(self.minheap)
+
+    def add(self, val: int) -> int:
+        heapq.heappush(self.minheap, val)
+        if len(self.minheap) > self.k:
+            heapq.heappop(self.minheap)
+        return self.minheap[0]
+
+
+        
