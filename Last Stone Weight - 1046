@@ -1,0 +1,27 @@
+### NOTES
+# 
+# We can solve this problem by creating a max heap of array stones
+# python does not have a built in max heapify operation so we can make the array negative and use a min heap
+# then we can pop two stones x and y, and run the simulation
+# if there is a stone left after the simulation we push it to the heap 
+# we continue this until the heap either has 1 or ) elements remaining
+# reuturn the final element if there is one
+# this is a O(N log(N)) time complexity problem with O (N) space 
+
+class Solution:
+    def lastStoneWeight(self, stones: List[int]) -> int:
+
+        stones = [-s for s in stones]
+
+        heapq.heapify(stones)
+
+        while len(stones) > 1:
+            first = heapq.heappop(stones) 
+            second = heapq.heappop(stones)
+            if second > first:
+                heapq.heappush(stones,first - second)
+
+        stones.append(0)
+        return abs(stones[0])
+        
+        
