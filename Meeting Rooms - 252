@@ -1,0 +1,42 @@
+/** NOTES
+ * for this problem we are given so intervals, and we want to see if there are any conflicts
+ * A brute force solution is to check every interval and compare with all other intervals
+ * but we can decrease our work by sorting the array based on the start time
+ * once sorted, we compare the the end time of the first interval to the start of the next and so on
+ * if the start is ever before the end, we can return false, else we return True
+*/
+
+/**
+ * Definition of Interval:
+ * class Interval {
+ * public:
+ *     int start, end;
+ *     Interval(int start, int end) {
+ *         this->start = start;
+ *         this->end = end;
+ *     }
+ * }
+ */
+
+
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+class Solution {
+public:
+    bool canAttendMeetings(vector<Interval>& intervals) {
+        // Sort intervals by start time
+        sort(intervals.begin(), intervals.end(), [](const Interval& a, const Interval& b) {
+            return a.start < b.start;
+        });
+
+        for (int i = 1; i < intervals.size(); ++i) {
+            if (intervals[i].start < intervals[i - 1].end) {
+                return false; // conflict
+            }
+        }
+
+        return true;
+    }
+};
