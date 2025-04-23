@@ -1,0 +1,81 @@
+
+/* NOTES
+* We will make our ADT by having a root, which points to the first letter of all types of words inserted
+* each word is broken down as nodes, where the first letter is the ancestor of the second and so on
+* the last character of each word has an end mark to indicated the word ends here
+* the insert function of our class will create these nodes and links
+* if insert a word that contains the letters from an already inserted word, we reuse the nodes
+* our search function will traverse from node, checking to see if the entire word has a path that forms it, and has an end mark
+* the startswith function will work simiarly, but it does not care about the end mark
+* the time complexity for insert is O(n), 
+*/
+
+#include <string>
+using namespace std;
+
+struct TrieNode {
+    TrieNode* children[26];
+    bool isWord;
+
+    TrieNode() {
+        for (auto &c : children) {
+            c = nullptr;
+        }
+        isWord = false;
+    }
+};
+
+class PrefixTree {
+private:
+    TrieNode* root;
+
+    void clear(TrieNode* tn) {
+        for (int i = 0; i < 26; i++) {
+            if (tn->children[i]) {
+                clear(tn->children[i]);
+            }
+        }
+        delete tn;
+    }
+
+    TrieNode* find(string& s) {
+        TrieNode* tn = root;
+        for (auto &c : s) {
+            if (!tn->children[c - 'a']) {
+                return nullptr;
+            }
+            tn = tn->children[c - 'a'];
+        }
+        return tn;
+    }
+
+public:
+    PrefixTree() {
+        root = new TrieNode();
+    }
+
+    ~PrefixTree() {
+        clear(root);
+    }
+
+    void insert(string word) {
+        TrieNode* tn = root;
+        for (auto &c : word) {
+            if (!tn->children[c - 'a']) {
+                tn->children[c - 'a'] = new TrieNode();
+            }
+            tn = tn->children[c - 'a'];
+        }
+        tn->isWord = true;
+    }
+
+    bool search(string word) {
+        TrieNode* end = find(word);
+        return end && end->isWord;
+    }
+
+    bool startsWith(string prefix) {
+        return find(prefix) != nullptr;
+    }
+};
+
