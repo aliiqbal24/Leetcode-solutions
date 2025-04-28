@@ -1,0 +1,43 @@
+### NOTES
+# 
+# We begin by sorting the intervals array, based on the start values
+# once sorted, we can see how many overlaps there are in an interval and store the max overlaps
+# this would be the minimum amount of days 
+# we can implement this idea by having 2 arrays, one for the end time, and one for the start
+# with two pointers, one in each array, we see if the end start pointer is greater than the ednd
+# this means there is a current meeting, increment our count and the min of the two pointers
+# keep track of the max count and return this at the end, this is our solution
+
+
+
+
+class Solution:
+    def minMeetingRooms(self, intervals: List[Interval]) -> int:
+
+        start = sorted([i.start for i in intervals])
+        end = sorted([i.end for i in intervals])
+        count = 0
+        res = 0
+        s,e = 0, 0
+        while s < len(intervals):
+            if start[s] < end[e]:
+                s += 1
+                count += 1
+            else:
+                e += 1
+                count -= 1
+            res = max(res,count)
+        
+        return res
+
+
+        
+
+
+"""
+Definition of Interval:
+class Interval(object):
+    def __init__(self, start, end):
+        self.start = start
+        self.end = end
+"""
