@@ -1,0 +1,30 @@
+### NOTES
+#
+# here we are finding the k Closest points to 0,0
+# each point has 2 fields, x and y, the distance is sqrt(x^2 +y^2)
+# we could use a calculate the distance of each point, and put these values in a min heap
+# then we can pop k amount of values, which we add to an empty result list
+# this is O(k*log(n)) time complexity, as the bottle neck is at heapify function
+# space complexity is O(n) as worst case we store the full heap
+
+class Solution:
+    def kClosest(self, points: List[List[int]], k: int) -> List[List[int]]:
+
+        minHeap = []
+        for x, y in points:
+            dist = x**2 + y**2
+            minHeap.append([dist, x,y])
+        
+
+        heapq.heapify(minHeap)
+        ans = []
+        while k:
+
+            dist, x, y = heapq.heappop(minHeap)
+            ans.append([x,y])
+            k -= 1
+        
+        return ans
+
+
+        
