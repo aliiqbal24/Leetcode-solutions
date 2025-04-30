@@ -1,0 +1,19 @@
+### NOTES
+#
+# In this problem we are return the kth largest element in a given array
+# if we sort the array we can just return by index, but a follow up is to solve without sorting
+# With that considered the next logical approach is a max heap
+# we can heapify, and then pop k amount of elements, and return the kth pop
+# this method has an O(N+ k Log(N)) which is usually better than the sorting approach
+# there is also an O(N) space complexity due to the max heap
+
+class Solution:
+    def findKthLargest(self, nums: List[int], k: int) -> int:
+
+        maxHeap = [-n for n in nums]
+        heapq.heapify(maxHeap)
+
+        while k>1:
+            heapq.heappop(maxHeap)
+            k -= 1
+        return -(heapq.heappop(maxHeap))
