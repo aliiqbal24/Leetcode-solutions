@@ -1,0 +1,26 @@
+### NOTES
+#
+# this problem is quite similar to the previous house robeer leetcode, but with a circular array
+# this means we cant rob both the first and last as they are adjacent
+# an easy get around is calling the function from house robber I twice
+# once for the array without the last element, and one without the first
+# the max of these two is the max we can rob from the circular array
+# the time complexity is again O(N) as we are repeating a linear operation twice,still linear
+
+
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+
+        return max(nums[0], self.helper(nums[1:]), self.helper(nums[:-1]))
+
+    def helper(self, nums):
+
+        rob1, rob2 = 0,0
+
+        for n in nums:
+            temp = max(n + rob1, rob2)  
+            rob1 = rob2 
+            rob2 = temp
+        return rob2
+            
+        
