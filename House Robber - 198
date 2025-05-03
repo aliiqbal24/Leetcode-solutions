@@ -1,0 +1,22 @@
+### NOTES
+#
+# In this problem, we can think of this as findiing the max sum without using adjacent elements
+# as any DP problem, we want to find the subproblem/ recurrence relation
+# here we can think two cases per hosue, either we include it then skip one and find the max of the left over
+# or we dont include and find the max of the leftover
+# these can be called rob1 and rob2, both starting at 0
+# for every element, we add the max of itself + rob2 or rob1, this repeats on and on
+# after one loop, rob1 becomes rob2, and rob2 the current sum
+
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+
+        rob1 = rob2 = 0
+
+        for n in nums:
+            temp = max(n + rob1, rob2)
+            rob1 = rob2
+            rob2 = temp
+        return rob2
+
+        
