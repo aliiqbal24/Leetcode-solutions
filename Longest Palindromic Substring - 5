@@ -1,0 +1,34 @@
+### NOTES
+#
+# in this problem, we must find the longest substring that is the same forward and backwords
+# if we were to brute force it, checking every subtring, starting with every letter, that woukd be O(N^3) Time Complexity
+# so here is our trick, we treat ever charachter of the string as the possible center of the subtrings
+# there is one nuance, we also have to consider even palindromes, same proce but we shift the right pointer by one
+# this way we can check every substring linearly, which we must do N times, so our solution is O(N^2) 
+# this is significantly better, and we also have O(1) space complexity
+
+
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
+
+        res = ""
+        resLen = 0
+
+        for i in range(len(s)):
+            l = r = i
+            while l >= 0 and r < len(s) and s[l] == s[r]:
+                if (r - l + 1) > resLen:
+                    res = s[l:r+1]
+                    resLen = r - l + 1
+                l -= 1
+                r += 1
+
+            l, r = i, i + 1
+            while l >= 0 and r < len(s) and s[l] == s[r]:
+                if (r - l + 1) > resLen:
+                    res = s[l:r+1]
+                    resLen = r - l + 1
+                l -= 1
+                r += 1
+
+        return res
