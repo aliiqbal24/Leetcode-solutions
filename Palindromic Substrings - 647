@@ -1,0 +1,39 @@
+### NOTES
+#
+# A brute force solution for this problem is to check every substring, to see if it a palindrome
+# thats n^2 to get all substrings times n to check palindrome, so O(n^3), optimizing a two pointer check
+# we can make this better by treating each element as the possible center of some palindromes
+# for every element, we shift the pointers, until they are out of range, and increment if there is ever a palindrome
+# when we have repeated this for every element we can return our count 
+# this method get us O(n^2) time complexity and O(1) space for the count
+
+class Solution:
+    def countSubstrings(self, s: str) -> int:
+
+        count = 0
+
+        for i in range(len(s)):
+
+            l = r = i
+
+            while l >= 0 and r < len(s) and (s[l] == s[r]):
+                count += 1 
+                l -= 1
+                r += 1
+            
+            #EVEN 
+
+            l, r = i, i+1
+
+            while l >= 0 and r < len(s) and (s[l] == s[r]):
+                count += 1 
+                l -= 1
+                r += 1
+        return count
+        
+
+
+
+
+
+        
