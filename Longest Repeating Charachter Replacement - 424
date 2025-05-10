@@ -1,0 +1,6 @@
+### NOTES
+# 
+# In this problem we want to return the longest amount of repeating charachters, after an ideal replace of k chars
+# A brute force option is to try every replacement orientation, for each character in the array
+# this is overkill, with a time complexity of O(N^2) for the number of elements n
+# 
