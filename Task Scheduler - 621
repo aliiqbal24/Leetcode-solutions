@@ -1,0 +1,37 @@
+### NOTES
+#
+# In this problem, we return the minimum CPU cycles to perform all task, where identincal tasks must be spaced by n
+# we can use a hash map and get the count of all the charachters, it is only logical to do tasks from highest to lowest freQ
+# we can store the counts in a max heap, going from the top, decrementing and adding to a queue
+# also, we add the time when we can use again to the que, which is our current time + n
+# pnce our current time = the time of the front of the que, we can pop and add it to our max heap
+# repeat this process until the max heap is empty and return the total time
+# time comp is O(n), where n is the number of elements as we are decrementing by q until heap is empty
+# space comp is O(n) for the counter
+
+
+class Solution:
+    def leastInterval(self, tasks: List[str], n: int) -> int:
+
+        count = Counter(tasks)
+
+        MaxHeap = [-cnt for cnt in count.values()]
+        heapq.heapify(MaxHeap)
+
+        time = 0
+
+        q = deque()
+
+        while MaxHeap or q: 
+            time += 1 
+
+            if MaxHeap:
+                cnt = 1 + heapq.heappop(MaxHeap)
+                if cnt:
+                    q.append([cnt,time + n])
+            
+            if q and q[0][1] == time:
+                heapq.heappush(MaxHeap, q.popleft()[0])
+
+        return time
+        
