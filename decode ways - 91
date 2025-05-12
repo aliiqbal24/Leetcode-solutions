@@ -1,0 +1,33 @@
+### NOTES
+#
+# We want to return the number of ways to decode the string of numbers, 
+# The tricky part of this question is for when a string has a 0, 1 or 2, as 0 doesnt decode, and the others can have continued decodes
+# when a digit is 3-9, there is only one branch, if we start with a 1, theres 2 branches for 2, the next digit must be 0-6
+# this is a DP problem as the numbers build onto each other
+# we can do it top down, until we get the base case of n empty string
+# if the char is 0, no decoding, else if add the ways, and check if there is a two digit way
+# continue for the whole string and return the final dp
+# the time complexity is O(n) as there is one for loop of iteration,s the space is O(1)
+
+
+class Solution:
+    def numDecodings(self, s: str) -> int:
+
+        dp = {len(s) : 1}
+
+        for i in range(len(s) - 1, -1, -1):
+
+            if s[i]== "0":
+                dp[i] = 0
+            else: 
+                dp[i] = dp[i+1]
+        
+            if (i+1 < len(s) and (s[i] == "1" or s[i] == "2" and s[i+1] in "0123456")):
+                dp[i] += dp[i+2]
+        
+        return dp[0]
+        
+
+        
+
+    
