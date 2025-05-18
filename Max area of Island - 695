@@ -1,0 +1,47 @@
+### NOTES 
+#
+# We can solve this buy traversing the graph, if its 0, pass, but for a "1" (islands) we check their area
+# this can be done with a bfs, where we use a queue and add any neighbours that are land
+# every land add to its area total, we keep going until there are no land neighbours
+# keeping track of the max of these only, as we check the whole map, we will have the max area
+# this method has a time and space complexity of O(n*m), as we are iterating throught the whole grid, and the bfs could potentially get that size
+
+
+class Solution:
+    def maxAreaOfIsland(self, grid: List[List[int]]) -> int:
+
+        directions = [[1,0],[0,1],[-1,0],[0,-1]]
+        ROWS, COLS = len(grid), len(grid[0])
+        area = 0
+
+        def bfs(r,c):
+            
+            q = deque()
+            grid[r][c] = 0 # so we don't revisit
+            q.append((r,c))
+            isleArea = 1
+            while q:
+                row, col = q.popleft()
+                for dr,dc in directions:
+                    newR, newC = dr + row, dc + col
+                    if (newR < 0 or newC < 0 or newR >= ROWS or newC >= COLS or grid[newR][newC] == 0):# Check bounds
+                        continue
+                    isleArea += 1
+                    q.append((newR,newC))
+                    grid[newR][newC] = 0
+            return isleArea
+        
+        for r in range(ROWS):
+            for c in range(COLS):
+                if grid[r][c] == 1:
+                    area = max(area,bfs(r,c))
+
+        return area # fix scope
+
+
+
+
+
+
+
+        
