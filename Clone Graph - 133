@@ -1,0 +1,33 @@
+### NOTES
+#
+# to build a deep copy we traverse the graph cloning the values, then appending the neighbours to a queue
+# this is a Bfs solution, where we start with a dictionary and a que with only the initial node
+# then we pop the queue and check its neighbours, if they are not in our map, we add them to it and push into the queue
+# in this same loop, we make clones for the neighbours, so that eventually every vertex is cloned
+# this continues until all possible values are in our map, ending the queue
+# now we return the colde node with all its proper vertexes
+
+class Solution:
+    def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:
+
+        if not node:
+            return None
+
+        q = deque([node])
+        oldToNew = {}
+        oldToNew[node] = Node(node.val)
+
+        while q:
+            
+            curNode = q.popleft()
+
+            for n in curNode.neighbors:
+                if n not in oldToNew:
+                    oldToNew[n] = Node(n.val)
+                    q.append(n)
+            # Add the cloned neighbor to the current clone's neighbor list
+                oldToNew[curNode].neighbors.append(oldToNew[n])
+            
+        return oldToNew[node]
+
+        
