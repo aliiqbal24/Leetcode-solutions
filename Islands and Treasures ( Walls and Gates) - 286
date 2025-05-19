@@ -1,0 +1,47 @@
+### NOTES
+# 
+# for this problem we want to find the smallest distance from each land cell to a treasure
+# the optimal way to do this is to do a BFS from each treasure chest, and change the value in place
+# since we do this for each chest, we go with the lowest distance per land, this leads to the shortest path 
+# we initailly just locate the treasure chest, add them to out visit set, to avoid extra work, and then append them to the queue
+# To add the land to the land, we can call a helper function in all direction to avoid redundancy
+# the Bfs continues until the q is empty
+# the time complexity is O(n*m) same with space
+
+
+class Solution:
+
+    def islandsAndTreasure(self, grid: List[List[int]]) -> None:
+
+        ROWS, COLS = len(grid), len(grid[0])
+        q = deque()
+        visited = set()
+
+        def addland(r,c):
+            if (r<0 or r == ROWS or c<0 or c == COLS or (r,c) in visited or grid[r][c] == -1):
+                return
+            visited.add((r,c))
+            q.append([r,c])
+
+        for r in range(ROWS):
+            for c in range(COLS):
+                if grid[r][c] == 0:
+                    visited.add((r,c))
+                    q.append([r,c])
+        
+        dist = 0
+
+        while q:
+            for i in range(len(q)):
+                r, c = q.popleft()
+
+                grid[r][c]  = dist
+                addland(r+1,c)
+                addland(r-1,c)
+                addland(r,c-1)
+                addland(r,c+1)
+            dist +=1
+
+
+    
+        
