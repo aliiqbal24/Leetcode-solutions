@@ -1,0 +1,41 @@
+### NOTES
+# 
+# a good way to think of this problem is that there are pacific cells and atlantic cells, meaning water can always flow to that ocean
+# initail the top and left are pacific, and the bottom and right are atlantic
+# a cell that lets water flow is one that is higher than an adjacent pacific and atlantic cel
+# hence the corners are always valid
+# We can do an "atlantic DFS" where we see tag each cell with a bool whether it can flow to the atlanttic
+# then we run a "Pacific DFS" similarly
+# at the end, the cells that have both conditions met will be returned 
+# O (n*m) Time and space complexity
+class Solution:
+    def pacificAtlantic(self, heights: List[List[int]]) -> List[List[int]]:
+        
+        directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+        ROWS, COLS = len(heights), len(heights[0])
+
+        pac, atl = set(), set() 
+
+        def dfs(r, c, visit, prev):
+            if ((r, c) in visit or r < 0 or c < 0 or 
+                r >= ROWS or c >= COLS or heights[r][c] < prev):
+                return
+            visit.add((r, c))
+            dfs(r + 1, c, visit, heights[r][c])
+            dfs(r - 1, c, visit, heights[r][c])
+            dfs(r, c + 1, visit, heights[r][c])
+            dfs(r, c - 1, visit, heights[r][c])
+
+        for c in range(COLS):
+            dfs(0, c, pac, heights[0][c])
+            dfs(ROWS - 1, c, atl, heights[ROWS - 1][c])
+        
+        for r in range(ROWS):
+            dfs(r, 0, pac, heights[r][0])
+            dfs(r, COLS - 1, atl, heights[r][COLS - 1])
+        
+        return list(map(list, pac & atl))
+
+
+
+
