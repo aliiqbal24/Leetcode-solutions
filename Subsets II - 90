@@ -1,0 +1,41 @@
+### Notes
+# 
+# In this problem we want to give all subsets of an array, which may contain duplicates
+# the nuance is that we may repeats subsets due to the dupes, this can be handled with a set, but there is a better approach
+# to solve we treat each elemant as a fork, and we make two paths, one where we include and one where we don't
+# once all paths are complement we have all the possible subsets, but how do we handle the duplicates?
+# if we first sort the array, we can get the duplicates togehter, and treat the path of the first duplicate specially
+# then the branch that includes the 1st duplicate will continue normal, but the one with the second, will skip it
+# any more duplicates will be skipped as well
+# the time complexity for this solution is O(n*2^n) (a possible 2^n tree for each element) which is pretty optimal for backtracking
+# the space complexity is also O(n*2^n)
+
+
+class Solution:
+    def subsetsWithDup(self, nums: List[int]) -> List[List[int]]:
+        
+        res = []
+        nums.sort()
+
+        def backtrack(i,subset):
+            if i == len(nums): # base case
+                res.append(subset[::])
+                return
+            
+            subset.append(nums[i])
+            backtrack(i+1, subset)
+            subset.pop()
+
+            while i+1 < len(nums) and nums[i] == nums[i+1]:
+                i+=1 # skip the dupe
+            backtrack(i+1, subset)     
+
+        backtrack(0,[])
+        return res           
+            
+
+
+
+
+
+        
