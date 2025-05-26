@@ -1,0 +1,17 @@
+### NOTES
+#
+# this is regarded as a a DP problem, but I saw a similar problem in my discrete math class
+# we can think of this mathematically, where you must move down m-1 times, and right n-1 times
+# so we can just use mathematical choose, as we just want the combinations 
+# meaning the number of ways, where order does not matter
+# we can just make our function the choose function and return that
+# top is the total moves, and bottom is each ones factorial Multiplied
+# time complexity of O(n+m) due to the factorials, the space complexity is O(1)
+
+class Solution:
+    def uniquePaths(self, m: int, n: int) -> int:
+
+        top = math.factorial(m + n -2)
+        bottom = (math.factorial(m-1))*(math.factorial(n-1))
+        return (top//bottom)
+        
