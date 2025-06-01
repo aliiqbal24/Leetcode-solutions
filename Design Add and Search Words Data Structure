@@ -1,0 +1,57 @@
+### NOTES
+#
+# THis a basic object oriented programing question with a nuance of using a Trie (Prefix Tree) data structure and handling the . wildcard
+# when we search, we check char by char, and see if the last node has a isEnd state
+# with a dot, we use a dfs to see if any path works, trying all and subpaths for the next charachter
+# the big O notatation for insertion is O(L), L is length of word
+# the time complexity of search is O(A*L), a is the possible 26 letters of the alphabet
+# 
+
+
+class TrieNode:
+
+    def __init__(self):
+
+        self.children = {}
+        self.IsEnd = False
+
+class WordDictionary:
+
+    def __init__(self):
+
+        self.root = TrieNode()        
+
+    def addWord(self, word: str) -> None:
+        ## push to ur data struct
+        cur = self.root
+
+        for c in word:
+            if c not in cur.children:
+                cur.children[c] = TrieNode()
+            cur = cur.children[c]
+        cur.IsEnd = True 
+        
+
+    def search(self, word: str) -> bool:
+        ## check if in struct fast (trie) which is , let . be any char 
+
+
+        def dfs(j, root):
+
+            cur = root
+
+            for i in range(j, len(word)):
+                c = word[i]
+
+                if c == ".":
+                    for child in cur.children.values():
+                        if dfs(i+1,child):
+                            return True
+                    return False
+
+                else: 
+                    if c not in cur.children:
+                        return False
+                    cur = cur.children[c]
+            return cur.IsEnd
+        return dfs(0,self.root)
