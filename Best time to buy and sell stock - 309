@@ -1,0 +1,41 @@
+### NOTES
+
+# Given an array og prices, of which we can buy or sell, with a cool down of one day
+# we must return the maximum profit from those prices
+# it is obvious this is a dynamic programming problem, so lets think or it top down
+# at the start you must buy, this is a state we must keep track off, as a bool
+# after sell there is a minimum cooldown of 1 day, there is always a choice of cooldown, with a toggle between buy and sell 
+# if we do this as a tree, the time complexity is 2^n
+# we can do caching to dercrease this to O(N) space and time
+
+
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+
+        # state, buy or sell
+        # If buy, i +1
+        # If sell, i +2
+
+        dp = {} # key = (i,buy) val = max_profit
+
+        def dfs(i, buying):
+            
+            if i >= len(prices):
+                return 0
+            
+            if (i, buying) in dp:
+                return dp [(i, buying)]
+
+            if buying:
+                buy = dfs(i+1, not buying) - prices[i]
+                cooldown = dfs(i+1,buying)
+                dp[(i,buying)] = max(buy,cooldown)
+            else:
+                sell = dfs(i+2, not buying) + prices[i]
+                cooldown = dfs(i+1,buying)
+                dp[(i,buying)] = max(sell,cooldown)
+            return dp [(i,buying)]
+        return dfs(0, True)
+
+
+        
