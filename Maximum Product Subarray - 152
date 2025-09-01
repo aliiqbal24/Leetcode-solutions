@@ -1,0 +1,40 @@
+### NOTES
+
+# if we were to try EVERY subarray, that would be O(N^@) - we can do better
+# this is a dynamic prodgramming problem as we can break it down in to subproblems
+# if all are positive, the whole array is the right answer
+# if there are negatives, we can also keep track of the minimum, as a negative, can flip it to being biggern than the max 
+# lastly, if there is a 0, we can also split the array at that, and the answer is one section
+# between all these subarrays, we calculate their sum, returning the max
+
+
+
+class Solution:
+    def maxProduct(self, nums: List[int]) -> int:
+
+        res = max(nums) # initial max
+
+        subMax = 1
+        subMin = 1
+
+        temp = 0
+
+        for i in nums:
+
+            if i == 0:
+                subMax, subMin = 1,1
+                continue
+            
+            temp2 = subMax * i
+            subMax = max(subMax * i, i * subMin, i)
+            subMin = min(temp2, i * subMin, i)
+
+            res = max(subMax,res)
+
+        return res
+            
+
+            
+
+
+        
