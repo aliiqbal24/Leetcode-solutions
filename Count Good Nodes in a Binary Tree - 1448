@@ -1,0 +1,39 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+
+### NOTES
+#
+# a node is good if there is all nodes between that and the root are smaller
+# we can do a DFS, where we keep track of the largest value in the path
+# the root is always a good node
+# for each iteration, we have kept track of the largest in the path, so we can compare this with the current node
+# if it is bigger, we increment our count, and continue the DFS
+# we will do a preorder traversal, which is O(N) time complexity, and o(N) space (the height)
+
+class Solution:
+    def goodNodes(self, root: TreeNode) -> int:
+        
+        
+        def dfs(node,maxVal):
+            if not node:
+                return 0
+            
+            res = 1 if node.val >= maxVal else 0
+            maxVal = max(maxVal, node.val)
+
+            dfs(node.left, maxVal)
+            dfs(node.right, maxVal)
+            res+= dfs(node.left, maxVal)
+            res += dfs(node.right, maxVal)
+
+            return res
+        
+        return dfs(root, root.val)
+
+
+
