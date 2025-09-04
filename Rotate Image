@@ -1,0 +1,28 @@
+### NOTES
+
+# get the transpose of this matrix - can do with helper ducntio
+# then we can flip horizontally
+# must do in place, for ideal space complexity, can be done by, for every value: matrix[i][j] = matrix[j][i]
+# the time complexity is of O(n^2) and the space complexity is O(1) extra
+
+class Solution:
+    def rotate(self, matrix: List[List[int]]) -> None:
+
+        n = len(matrix)
+
+        #flip vertically
+
+        for i in range(n//2):
+            for j in range(n):
+                matrix[i][j], matrix[n-1-i][j] = matrix[n-1-i][j], matrix[i][j]
+
+        def transpose(mtx):
+
+            for i in range(n):
+                for j in range(i+1,n):
+                    mtx[i][j], mtx[j][i] = mtx[j][i], mtx[i][j]
+                
+        return transpose(matrix)
+        
+        
+        
