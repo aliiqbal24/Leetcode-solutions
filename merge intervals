@@ -1,0 +1,31 @@
+### NOTES
+# 
+# Start by sorting the array, so we can iterate in a loop
+# we can set add the first value, so that we can compare the next with it
+# comparing the end of the last interval, to the start of the next
+# if there is overlap, edit the last value to the new interval
+# If not, just append the next interval and so on
+# the time complexity is O(logN) and the space is O(n)
+
+class Solution:
+    def merge(self, intervals: List[List[int]]) -> List[List[int]]:
+
+        # Sort the list
+        intervals.sort(key = lambda i: i[0])
+
+        res = [intervals[0]] # result array that we will append to, for our answer
+        
+        for i,j in intervals[1:]: # iterate over list, stay in range
+
+            lastEnd = res[-1][1]
+
+            if i <= lastEnd:
+                res[-1][1] = max(lastEnd, j)
+            
+            else: 
+                res.append([i,j]) 
+
+        return res
+
+
+
