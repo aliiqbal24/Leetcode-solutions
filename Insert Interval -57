@@ -1,0 +1,27 @@
+### NOTES
+#
+# Since the intervals are already sorted, we can compare the endpoints of each interval, vs the start of our new interval
+# Every time an interval overlaps, we want to merge them
+# we can loop over the intervals array, doing this when applicable
+# if there are no overlaps, depending on the newinterval, we can inster it by its first number
+# we only iterate once, and this will be O(n) space and time
+class Solution:
+    def insert(self, intervals: List[List[int]], newInterval: List[int]) -> List[List[int]]:
+
+        res = []
+
+        for i in range(len(intervals)):
+
+            if newInterval[1] < intervals[i][0]: ## the end if new interval less than anyfuture start point 
+                res.append(newInterval)
+                return res + intervals[i:]
+            elif newInterval[0] > intervals[i][1]:
+                res.append(intervals[i])
+            else: 
+                # if new intvl end greater than the start of the next 
+                #we need to merge this interval
+                newInterval = [min(newInterval[0], intervals[i][0]), max(newInterval[1], intervals[i][1])] 
+
+        res.append(newInterval)
+        return res
+            
