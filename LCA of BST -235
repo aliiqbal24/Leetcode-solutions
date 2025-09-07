@@ -1,0 +1,33 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+
+### NOTES
+#
+# unique nodes, return lowest common ancestors
+# what we want to find is root of the minimal subtree, which both nodes
+# since its a BST, we can start at the root then we can look for the first number between p and q 
+# we are guaranteed a solution, so we can do a while loop with no base
+# if both p and q are larger than the node, we move current right,
+# if both are smaller, move left
+# else we found the inbetween and we can return
+# the time complexity is expected O(N) and the space complexity is O(1) - no data stored
+
+class Solution:
+    def lowestCommonAncestor(self, root: TreeNode, p: TreeNode, q: TreeNode) -> TreeNode:
+        
+        cur = root
+
+        while cur:
+
+            if p.val > cur.val and q.val > cur.val:
+                cur = cur.right
+            elif p.val < cur.val and q.val < cur.val:
+                cur = cur.left
+            else: # found our result
+                return cur
+
