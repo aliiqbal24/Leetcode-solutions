@@ -1,0 +1,38 @@
+
+### NOTES
+#
+# a brute force strategy is to traversal the entire tree, adding to an extra list
+# then sort the list and return the kth smallest, but we can do better as this is a BST
+# with the right traversal, we can go from least to most
+# this would be starting at the left subtree, then the parent, then the right subtree
+# we can do this recursively, decrementign k, as it is non local
+# the time complexity of this expected O(H+K) where we will have h moves to reach the bottom, and k to traverse
+# space is O(h)
+
+class Solution:
+    def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
+
+        ans = None 
+
+        def inorder(node):
+
+            nonlocal k, ans
+
+            if not node or ans is not None:
+                return
+        
+
+            inorder(node.left)
+
+            # process node
+
+            k-=1
+            if k == 0:
+                ans = node.val
+
+            inorder(node.right)
+
+        inorder(root)
+
+        return ans
+            
