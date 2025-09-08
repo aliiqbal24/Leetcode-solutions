@@ -1,0 +1,43 @@
+### NOTES
+#
+# it is an unsorted array, so we could benefit from sorting it
+# immediately, if len(hand) mod groupsize is not 0, we know its false
+# we should count the number of cards of each val, with a hash map
+# starting from the minimum, we count up, removing from our count as we make the group
+# if ever we are unable to make the group, meaing the count is zero for a number we need
+# to optimize finding the minimum, we can use a minheap for the values
+# we can return false, else we return true
+# that would be O(nlogn) time and O(n) space
+
+
+class Solution:
+    def isNStraightHand(self, hand: List[int], groupSize: int) -> bool:
+
+        if groupSize == 1:
+            return True
+        if len(hand) % groupSize:
+            return False
+
+        count = {} # init hashmap
+
+        for i in hand:    # add to map
+            count[i] = 1 + count.get(i,0)
+        
+        minH = list(count.keys())
+
+        heapq.heapify(minH) ## complete minHeap
+
+        while minH:
+            first = minH[0]
+
+            for i in range(first, first+groupSize):
+                if i not in count:
+                    return False
+
+                count[i] -= 1
+
+                if count[i] == 0:
+                    if i != minH[0]:
+                        return False
+                    heapq.heappop(minH)
+        return True
