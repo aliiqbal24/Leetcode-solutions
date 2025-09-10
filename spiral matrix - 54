@@ -1,0 +1,45 @@
+### NOTES
+#
+# to do a spiral, we split each layer in to a top and bottom row, left and right column
+# we must keep track of bounds of our rectangle, and update them after we have reached them
+# when the layer is done, we move to the next, continuing the process
+# since we are returning an array, we will just traverse, appending to a result array, which we will return
+# time complexity is O(m*n) as we traverse the whole matrix just once
+# depending on if you count the res, the space complexity is O(mn), or O(1) if not
+
+class Solution:
+    def spiralOrder(self, matrix: List[List[int]]) -> List[int]:
+
+
+        res = []
+        left, right = 0, len(matrix[0])
+        top, bottom = 0, len(matrix)
+        
+        while left < right and top < bottom:
+            for i in range(left,right):
+                res.append(matrix[top][i])
+            top += 1
+
+            for i in range(top,bottom):
+                res.append(matrix[i][right-1])
+            right -= 1
+
+            if not (left < right and top < bottom):
+                break
+            
+            for i in range(right-1,left-1,-1):
+                res.append(matrix[bottom-1][i])
+            bottom -= 1
+
+            for i in range(bottom-1,top-1, -1):
+                res.append(matrix[i][left])
+            left += 1
+
+        return res
+
+
+
+            
+
+        
+        
