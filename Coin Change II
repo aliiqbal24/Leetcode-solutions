@@ -1,0 +1,37 @@
+### NOTES
+# 
+# for this problem we can solve with a 2D dynamic programming approach
+# where we have a row for each of the coins, and colum for each value 0- Amount
+# we will recursively fro from 0 to amount, where we calculate the number of ways to reach amount
+# in the row, you may only use the coins below it, this way we avoid dupes
+# we can cache the amount to not have to calculate the coins for each value
+# recursive we continue, until we reach our amount, where we can return
+
+
+
+class Solution:
+    def change(self, amount: int, coins: List[int]) -> int:
+
+        cache = {}
+            
+        def dfs(i,a):
+
+            if a == amount:
+                return 1
+            
+            if a > amount:
+                return 0
+            
+            if i == len(coins):
+                return 0
+            
+            if(i,a) in cache:
+                return cache[(i,a)]
+            
+            cache[(i,a)] = dfs(i,a + coins[i]) + dfs(i+1,a)
+
+            return cache[(i,a)]
+        
+        return dfs(0,0)
+
+        
