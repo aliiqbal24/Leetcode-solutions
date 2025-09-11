@@ -1,0 +1,36 @@
+### NOTES
+#
+# we are returning the amount of ways to make a target sum by adding either the positive or negative 
+# a brute force way is to check every combination, with either the positive or negative of each elemement
+# we do this recursively, calling the next iteration with both subtracting and adding the next i
+# though its expensive, we can used it and implement memoization after to optimize
+# the big O time complexity is now O(n*sum(nums)), with O(N) space
+
+
+class Solution:
+    def findTargetSumWays(self, nums: List[int], target: int) -> int:
+        
+        res = 0
+
+        cache ={}  # map to current ways
+
+        def backtrack(i,cursum):
+
+            if (i, cursum) in cache:
+                return(cache[(i,cursum)])
+
+            if i == len(nums):
+                return 1 if cursum == target else 0
+
+            cache[(i,cursum)] = (
+                backtrack(i+1, cursum - nums[i])+
+                backtrack(i+1,cursum + nums[i])
+                ) 
+            
+            return (
+                backtrack(i+1, cursum - nums[i])+
+                backtrack(i+1,cursum + nums[i])
+                ) 
+
+        
+        return backtrack(0,0)
