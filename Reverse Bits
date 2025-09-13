@@ -1,0 +1,16 @@
+### NOTES
+#
+# We want to reverse the binary number, then return the decimal
+# what we can do is loop over all bits, checking the LSB< and if it is 1 we add  to our result
+# we must add 2^(31-position) as we are returning the reverse
+# after the loop we can return res, this is O(1), space, also O(1), fixed iteration
+class Solution:
+    def reverseBits(self, n: int) -> int:
+
+       res = 0
+       for i in range(32):
+        if n & 1:
+            res += 2**(31-i)
+        n= n>>1
+        
+       return res
