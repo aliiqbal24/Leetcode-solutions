@@ -1,0 +1,34 @@
+### NOTES
+#
+# we can easily solve this with two by visiting every element
+# this would be a nested for loop, checking for any zeros, if so, we go over the whole row and column
+# then we can move to the next row, as we go, rememeber the row and col
+# once the entinre loop is done, we return the matrix
+# the time complexity is O (n*m), n is cols, m is rows
+
+class Solution:
+    def setZeroes(self, matrix: List[List[int]]) -> None:
+
+    
+     EraseRow=[]
+     EraseCol=[]
+     for i in range(len(matrix)):
+        for j in range(len(matrix[0])):
+
+            if matrix[i][j] == 0:
+                # remember it's whole row and column
+                # after we remember, we can do a full replace
+                EraseRow.append(i)
+                EraseCol.append(j)
+
+     # now we have a memory of all rows and cols we must erase
+
+     for r in (EraseRow):
+        matrix[r] = [0]* len(matrix[0])
+
+     for c in (EraseCol):
+        for r in range(len(matrix)):
+            matrix[r][c] = 0
+
+
+        
