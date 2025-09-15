@@ -1,0 +1,16 @@
+### NOTES
+#
+# This problem can easily be solved by a for loop, by first sorting the nums array
+# then we can compare the value of the ith element to i
+# the default case is to return the len of the array, as this is if the the last element is missing  
+# the time complexity is O(NlogN) and the space is O(1)
+
+class Solution:
+    def missingNumber(self, nums: List[int]) -> int:
+
+        nums.sort()
+
+        for i in range(len(nums)):
+            if nums[i] != i:
+                return i 
+        return len(nums)
