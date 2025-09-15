@@ -1,0 +1,48 @@
+### NOTES
+#
+# A common technique to go from string to int is to use the ascii value of the string, subtract/mod the ascii of 0
+# as we might be dealing with multiple digit numbers, we can iterate from the left, char by char, multiply the value by 10^position
+# after we have the ints, we can multiply and convert back to strings using a similar process
+# this will be our resulting string
+# the time complexity is O(m+n) for the conversion and multiply and O(n*m) space for the resulting string
+
+class Solution:
+    def multiply(self, num1: str, num2: str) -> str:
+        
+
+        def strToInt(s: str) -> int:
+            
+            val = 0
+
+            for c in s:
+                d = ord(c) - ord('0')
+
+                val = val *10 + d
+
+            return val
+
+        if num1 == "0" or num2 == "0":
+            return "0"
+
+        val1 = strToInt(num1)
+        val2 = strToInt(num2)
+
+        ans = val1 * val2
+
+        res = []
+
+
+        # convert back to string
+        while ans > 0:
+            digits =  ans%10
+            res.append(chr(ord('0') + digits))
+            ans //= 10
+        
+        return ''.join(reversed(res))
+        
+        
+
+
+
+
+        
