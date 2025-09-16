@@ -1,0 +1,76 @@
+### Notes
+#
+# This problem is difficult because we use built in data structure for O(1) look up (hash map), or O(1) removal/add (linked list)
+# To make LRU cache with both, we must design a datastructure that implements these features of both
+# From right to left, will be most to least recently used, acces will move a node to the very right
+# We must also start with dummy nodes on left and right, and never remove them, this is a way to have a constant value to point to on each side
+# the rest is just oop and readjusting pointers
+# all accessing, removing, get and put are O(1), the class is O(N) space
+
+
+class Node:
+
+    def __init__(self, key, val):
+
+        self.key, self.val = key,val  # set up for key val pairs
+        self.prev = self.next = None  # doubly linked, init links
+
+
+
+class LRUCache:
+
+    def __init__(self, capacity: int):
+
+        # left and right boundaries
+        self.cap = capacity
+        self.left, self.right = Node(0,0), Node(0,0)
+        self.left.next, self.right.prev = self.right, self.left
+
+        self.cache = {}
+
+
+    ## New function remove
+
+    def remove(self, node):
+
+        # remove link to that node, adjust pointers
+        prev, nxt = node.prev, node.next
+        prev.next, nxt.prev = nxt, prev
+
+    ### New Function to inter
+
+    def insert(self, node):
+
+        prev, nxt = self.right.prev, self.right
+        prev.next = nxt.prev = node
+        node.next, node.prev = nxt, prev
+
+
+
+    def get(self, key: int) -> int:
+
+        # return the val corresponding the key called
+        if key in self.cache:
+            node = self.cache[key]
+
+            self.remove(node)
+            self.insert(node)
+            return node.val
+        else:
+            return -1
+
+
+    def put(self, key: int, value: int) -> None:
+        
+        if key in self.cache:
+            self.remove(self.cache[key])
+
+        self.cache[key] = Node(key,value)
+
+        self.insert(self.cache[key])
+
+        if len(self.cache) > self.cap:
+            lru = self.left.next
+            self.remove(lru)
+            del self.cache[lru.key]
+
