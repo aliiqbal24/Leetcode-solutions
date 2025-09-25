@@ -1,0 +1,34 @@
+### NOTES
+#
+# the water per cell is the minumum(largest on left, largest on right) - height
+# We can use a two pointer approach, where the limiting factor is the lesser of the two
+# from there we first in/decrement, this is to move to the center cell within the walls
+# the calculate depth, add to res
+# we can stop when the pointers overlap
+# this is one iteration through the list, so O(N) time complexity, and O(1) space
+
+class Solution:
+    def trap(self, height: List[int]) -> int:
+
+        l, r = 0, len(height) -1 
+
+        MaxL, MaxR = height[l], height[r]
+
+        res = 0
+
+        while r > l:
+
+            if MaxL > MaxR:
+                r -= 1
+                res += max(0, MaxR - height[r])
+                MaxR = max(MaxR, height[r])
+            
+            else: 
+                
+                l += 1
+                res += max(0, MaxL - height[l])
+                MaxL = max(MaxL, height[l])
+
+
+        return res
+            
