@@ -1,1 +1,45 @@
 
+### NOTES
+#
+# if a countinous group of 'O's surrounded by x, turn them into X's
+# so the challenge is to find groups'o's and then check if they are surrounded by X's
+# the alternative is if they are on the border, then we know to leave them
+# we can Identify those and keep them, then we can turn every other o into an x
+# this wpuld be done in two nested loops over the matrix, first to get the border os, then flip the other os
+# the time and space complexity is both O(n*m)
+
+class Solution:
+    def solve(self, board: List[List[str]]) -> None:
+
+        rows, cols = len(board), len(board[0])   
+
+        def dfs(r, c):
+            if r<0 or r == rows or c<0 or c == cols or board[r][c] != 'O': 
+                return
+            
+            board[r][c] = "T"
+            dfs(r+1,c)
+            dfs(r-1,c)
+            dfs(r,c+1)
+            dfs(r,c-1)
+
+        # capture border O's
+        for i in range(rows):
+            for j in range(cols):
+
+                if (board[i][j] == 'O') and (j==0 or j== cols-1 or i == 0 or i== rows-1): # edge O
+                    dfs(i,j)
+
+        # convert surrounde 'O's
+        for i in range(rows):
+            for j in range(cols):
+
+                if board[i][j] == "O":
+                    board[i][j] = "X"
+        # revert border 'o's back
+        for i in range(rows):
+            for j in range(cols):
+
+                if board[i][j] == "T":
+                    board[i][j] = "O"
+       
