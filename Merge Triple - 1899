@@ -1,0 +1,32 @@
+### NOTES
+#
+# start with inital zeroes for each value
+# in a for loop, if any of the numbers are less than the target, then merge maxes
+# at the end of the loop, if there is a solution you will have it
+# because the merge operation is the only operation, its okay to rely on it
+# the big O time complexity is O(N), space complexity is O(1)
+
+
+class Solution:
+    def mergeTriplets(self, triplets: List[List[int]], target: List[int]) -> bool:
+
+        maxi = 0
+        maxj = 0
+        maxk = 0
+
+        for a,b,c in triplets:
+
+            if a <= target[0] and b <= target[1] and c <= target[2]:
+
+                maxi = max(maxi, a)
+                maxj = max(maxj, b)
+                maxk = max(maxk, c)
+        
+        return [maxi,maxj,maxk] == target
+
+
+
+        
+
+
+        
