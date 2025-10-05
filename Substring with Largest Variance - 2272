@@ -1,0 +1,52 @@
+### NOTES
+#
+# goal: find the max: count (a) - count(b) over all substrings 
+# try for every uniue pair, scan both front and back
+# +1 when the char is a, -1 when its b, ignore rest
+# only update if it has b (not substrings with out both)
+# track the best differece so far, reset diff, has_b if has_b <0
+# time is O(N^2) per letter
+class Solution:
+    def largestVariance(self, s: str) -> int:
+        # unique letters to reduce pairs we try
+        letters = set(s)
+        ans = 0
+
+        # try ordered pairs (a, b)
+        for a in letters:
+            for b in letters:
+                if a == b:
+                    continue
+
+                # forward scan
+                ans = max(ans, self._scan(s, a, b))
+                # backward scan (handles edge cases where optimal substring is “front-loaded” with b’s)
+                ans = max(ans, self._scan(reversed(s), a, b))
+
+        return ans
+
+    def _scan(self, seq, a, b):
+        diff = 0           # current score = count(a) - count(b)
+        has_b = False      # have we seen at least one b in current window?
+        best = 0
+
+        for ch in seq:
+            if ch == a:
+                diff += 1
+            elif ch == b:
+                diff -= 1
+                has_b = True
+            else:
+                # other chars don’t affect diff
+                pass
+
+            if has_b:
+                best = max(best, diff)
+
+            # If diff goes negative, reset — but only if we have seen a b
+            # Resetting discards the current window and starts fresh.
+            if diff < 0:
+                diff = 0
+                has_b = False
+
+        return best
