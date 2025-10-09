@@ -1,0 +1,39 @@
+#### NOTES
+#
+# So this problem can be thought of as, can you split are rebuild the strings, maintaining order, such that you get s3
+# this can be done, interating char by char on s3, vs the curr char at s1 and 2, 
+# if you match, with none remaining then you return true
+# the thing is, when the char of s3 is the curr for both  s1 and s2, we must explore both options
+# by caching we can use limited time complexity, so this is A DP problem
+# time complexity is expected O(n*m)
+# tbh I was to lazy to code up the dp solution, so i did a dfs that checks if we reach the end
+# if so return true, else try all the paths, and for a split call the dfs on the both
+# the standard is false, if not proven true, the time complexity is worst case O(2^n+m)
+# memory is worst case O(n+m)
+
+
+
+class Solution:
+    def isInterleave(self, s1: str, s2: str, s3: str) -> bool:
+
+        dp = {}
+
+        def dfs(i,j):
+            if i == len(s1) and j == len(s2): # reached end
+                return True
+            
+            if(i,j) in dp:
+                return dp[(i,j)]
+            
+            if i < len(s1) and s1[i] == s3[i+j] and dfs(i+1,j):
+                return True
+            if j < len(s2) and s2[j] == s3[i+j] and dfs(i,j+1):
+                return True
+            
+            dp[(i,j)] = False
+
+            return False
+        return dfs(0,0)
+
+
+        
