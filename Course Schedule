@@ -1,1 +1,52 @@
 
+### NOTES
+#
+# the second of the pair is a prereq to the first
+# if there is cycle, then you cannot start anywhere, you need to find a course that has no pprereqs, and move from there
+# every time you find a course with no prereqs, you can decrement numcourse
+# if num of courses is not 0, then you can follow the prereqs and unlock new 
+# so a brute force is to iterate, find course with no prereqs, decrement. and if needed, check the a element
+# if you have done b, you can also do a
+# this couldbe O(n^2) we can do better
+# the key is to notice that we cannot have a cycle, so we can make directed graph each element is a node
+# and the bs point to the a's, with the graph done, we can iterated, and check for a loop
+# if loop, return false, else true
+
+class Solution:
+    def canFinish(self, numCourses, prerequisites):
+        # Build graph manually
+        graph = [[] for _ in range(numCourses)]
+        for a, b in prerequisites:
+            graph[b].append(a)
+
+        visiting = [False] * numCourses
+        visited = [False] * numCourses
+
+        def dfs(course):
+            # If we are already visiting this course → cycle
+            if visiting[course]:
+                return False
+            # If already processed and safe → skip
+            if visited[course]:
+                return True
+
+            # Mark as visiting
+            visiting[course] = True
+
+            # Explore neighbors
+            for neighbor in graph[course]:
+                if not dfs(neighbor):
+                    return False  # cycle found below
+
+            # Mark done visiting (safe)
+            visiting[course] = False
+            visited[course] = True
+
+            return True
+
+        # Run DFS on every course (graph might be disconnected)
+        for i in range(numCourses):
+            if not dfs(i):
+                return False
+
+        return True
