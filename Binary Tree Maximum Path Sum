@@ -1,1 +1,38 @@
 
+### NOTES
+#
+# Approach:
+# Use post-order DFS to compute the maximum path sum through each node.
+# or every node, calculate left/right gains (max upward path including that child).
+# Discard negative paths by clamping with 0.
+# pdate a global maximum with the “turning” path: left + node + right.
+# Return to the parent only one branch (node + max(left, right, 0)).
+#
+# Time Complexity: O(n) Each node is visited once, and constant work is done per node.
+#
+# Space Complexity: O(h) h = height of tree → due to recursion stack (O(log n) for balanced, O(n) worst case).
+
+
+class Solution:
+    def maxPathSum(self, root: Optional[TreeNode]) -> int:
+
+        best = -1001
+
+        def dfs(node):
+            if not node:
+                return 0
+            
+            left_gain, right_gain = dfs(node.left), dfs(node.right)
+
+            through = node.val + max(left_gain, 0) + max(right_gain, 0)
+
+            nonlocal best 
+            best = max(best, through)
+
+            return node.val + max(max(left_gain, right_gain), 0)
+        
+        dfs(root)
+
+        return best
+        
+
