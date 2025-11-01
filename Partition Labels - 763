@@ -1,0 +1,43 @@
+### NOTES
+#
+# BRUTE FORCE:
+# start from right, for the first char, find its last instance
+# withing those bounds, you check what chars are in,
+# then you check for those chars outside the bounds, if none, thats one split
+# if so, per char, you look for the last instance, and the furthest is you split
+# then you continue for the next
+# DFS solution ^^^  ~ O(n^2)
+
+# alternatively, if we iterate once, and store the first and last indexx of all chars
+# then with this info, we should be able to make the splits
+# you look at the lowest index, and see its end bound, then you must make sure that all within this are lesseer
+# do this by finding the max, you make the split at max., and then if room left, you may move on
+
+# the time complexity of the revised solution is O(n), one iteration to build maps, other to cut partitions
+# the space is O(k) - where k is the unique chars set
+
+class Solution:
+    def partitionLabels(self, s: str) -> List[int]:
+
+        HMap = {} #char: 1st instance
+
+        EndMap = {} # char: last instance
+
+        for i in range(len(s)):  
+            if s[i] not in HMap: #first instance track
+                HMap[s[i]] = i
+            EndMap[s[i]] = i # last instance updated
+                
+        res = []
+        start, end = 0, 0
+
+        for i, ch in enumerate(s):
+            
+            end = max(end, EndMap[ch])
+            if i == end:
+                res.append(end - start + 1)
+                start = i+1
+
+        return res
+
+        
