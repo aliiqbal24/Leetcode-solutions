@@ -1,0 +1,29 @@
+###NOTES
+#
+# iterate from 2 to n, make that i, assume prime
+# check if it is divisible by any of the primes that we have seen
+# if so, it is not prime, we break that loop
+# if it new, it is prime and we can add that to our seen list, and increment our totals
+# once the loop is complete you have both the primes to that point, and the total
+# return the total
+
+class Solution:
+    def countPrimes(self, n: int) -> int:
+
+        listP = []
+        total = 0
+
+        for i in range(2,n):
+
+            isPrime = True
+
+            for j in listP:
+                if i%j==0:
+                    isPrime = False
+                    break
+
+            if isPrime == True:
+                listP.append(i)
+                total +=1
+        
+        return total
