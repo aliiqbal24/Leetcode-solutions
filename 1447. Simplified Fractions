@@ -1,0 +1,26 @@
+#### NOTES
+#
+# loop through 2-n as a denominator, and 1 to i as a numerator ( we dont want improper fractions)
+# if the greatest common divisor is 1, the fraction cannot be simplified further, so we can add to our result list
+# afterall iterations, we have our simplified list and return
+
+
+
+from math import gcd 
+
+class Solution:
+    def simplifiedFractions(self, n: int) -> List[str]:
+
+
+        res =[]
+
+        for i in range(2,n+1):
+            for j in range(1,i):
+
+                if gcd(i,j) == 1:
+                    res.append(f"{j}/{i}")
+        
+        return res
+
+
+
