@@ -1,0 +1,41 @@
+## NOTES
+#
+# this problem was very hard, just kept trying things until it worked, so no notes, other than very hard, my head hurts
+# lol and it will work for only all sets, not purely strictly increasing
+
+
+
+import math
+from collections import defaultdict
+
+class Solution:
+    def totalBeauty(self, nums: List[int]) -> int:
+
+        gcds =[]
+
+        n = len(nums)
+        
+        # must be recursive
+        def dfs(i:int, subset: List[int]):
+
+            if i == n: # full gcd lsit
+                if subset:
+                    g = subset[0]
+
+                    for x in subset [1:]:
+                        g = math.gcd(g,x) # check matches
+
+                    gcds.append(g) 
+
+                return
+
+            dfs(i+1, subset)
+
+            subset.append(nums[i])
+
+            dfs(i+1, subset)
+        
+        dfs(0,[])
+
+        return sum(gcds)
+
