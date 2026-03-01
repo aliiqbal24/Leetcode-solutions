@@ -1,2 +1,2 @@
 # Leetcode
-Recently I've challenged myself to do a leetcode anyday that I have the time for the forseeable future, and to hold myself accountable and showcase my progess, I thought I'd put it on github!
+I like to do these sometimes to hurt my brain, hopefully they have made me smarter, also help for J*b interviews I guess, I thought I'd put it on github!
